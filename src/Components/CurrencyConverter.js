@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 
-import CurrencyDisplay from "./CurrencyDisplay";
-
-const withCurrency = BaseComponent => {
+export const withCurrency = BaseComponent => {
 	return class Currency extends Component {
 		constructor() {
 			super();
@@ -78,7 +76,3 @@ const withCurrency = BaseComponent => {
 		}
 	};
 };
-
-const ExchangedCurrency = withCurrency(CurrencyDisplay);
-
-export default ExchangedCurrency;

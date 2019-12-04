@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import "./App.css";
 
-import ExchangedCurrency from "./Components/CurrencyConverter";
+import CurrencyDisplay from "./Components/CurrencyDisplay";
 
 class App extends Component {
 	render() {
 		return (
 			<>
-				<ExchangedCurrency />
+				<CurrencyDisplay />
 			</>
 		);
 	}
