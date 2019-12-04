@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import CurrencyDisplay from "./CurrencyDisplay";
+
 const withCurrency = BaseComponent => {
 	return class Currency extends Component {
 		constructor() {
@@ -11,6 +13,26 @@ const withCurrency = BaseComponent => {
 				amount: 0
 			};
 		}
+
+		handleAmountIncrease = () => {
+			this.setState(prevState => {
+				return { amount: prevState.amount + 1 };
+			});
+		};
+
+		handleAmountDecrease = () => {
+			this.setState(prevState => {
+				return { amount: prevState.amount - 1 };
+			});
+		};
+
+		handleOptionSelect = evt => {
+			const { value } = evt.target;
+			this.setState({
+				selectedCurrency: value,
+				currencyChosen: value === "Select Currency" ? false : true
+			});
+		};
 
 		render() {
 			const { selectedCurrency, amount, currencyChosen } = this.state;
@@ -31,20 +53,32 @@ const withCurrency = BaseComponent => {
 
 			return (
 				<>
-					<select value={selectedCurrency}>
+					<select onChange={this.handleOptionSelect} value={selectedCurrency}>
 						<option value="Select Currency">Select Currency</option>
 						{mappedCurrencyData}
 					</select>
 					<div>
-						<button className="minus">-</button>
-						<button className="add">+</button>
+						<button onClick={this.handleAmountDecrease} className="minus">
+							-
+						</button>
+						<button onClick={this.handleAmountIncrease} className="add">
+							+
+						</button>
 					</div>
-					<BaseComponent
-						currency={currencyData[selectedCurrency]}
-						amount={amount}
-					/>
+					{currencyChosen ? (
+						<BaseComponent
+							currency={currencyData[selectedCurrency]}
+							amount={amount}
+						/>
+					) : (
+						<p>Please Select Currency</p>
+					)}
 				</>
 			);
 		}
 	};
 };
+
+const ExchangedCurrency = withCurrency(CurrencyDisplay);
+
+export default ExchangedCurrency;
